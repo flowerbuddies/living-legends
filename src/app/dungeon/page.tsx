@@ -9,6 +9,12 @@ type Choice = "sword" | "shield" | "bow";
 const RPSGame: FC = () => {
   const options: Choice[] = ["sword", "shield", "bow"];
 
+  const [userHealth, setUserHealth] = useState<number>(100);
+  const [userStrength, setUserStrength] = useState<number>(1);
+
+  const [computerHealth, setComputerHealth] = useState<number>(100);
+  const [computerStrength, setComputerStrength] = useState<number>(1);
+
   const [userChoice, setUserChoice] = useState<Choice | null>(null);
   const [computerChoice, setComputerChoice] = useState<Choice | null>(null);
   const [result, setResult] = useState<string | null>(null);
@@ -18,7 +24,8 @@ const RPSGame: FC = () => {
     setComputerChoice(options[randomIndex]);
   };
 
-  const determineWinner = () => {
+  const determineDamage = () => {
+    const damageMultiplier = 1 * Math.random() * 0.5;
     if (userChoice === computerChoice) {
       setResult("It's a draw! Both sides stand firm.");
     } else if (
@@ -26,16 +33,19 @@ const RPSGame: FC = () => {
       (userChoice === "shield" && computerChoice === "sword") ||
       (userChoice === "bow" && computerChoice === "shield")
     ) {
-      setResult("You strike a mighty blow! You win!");
+      const damage = Math.floor(10 * (userStrength * damageMultiplier));
+      setComputerHealth((computerHealth) => computerHealth - damage);
+      setResult("You strike a mighty blow!");
     } else {
+      const damage = Math.floor(10 * (computerStrength * damageMultiplier));
+      setUserHealth((userHealth) => userHealth - damage);
       setResult("The enemy strikes back! Computer wins!");
     }
   };
 
   const handleUserChoice = (choice: Choice) => {
-    setUserChoice(choice);
     generateComputerChoice();
-    determineWinner();
+    determineDamage();
   };
 
   return (
@@ -44,7 +54,7 @@ const RPSGame: FC = () => {
       <div>
         <div>
           <p>Your Choice: {userChoice}</p>
-          <p>Enemy Choice: {computerChoice}</p>
+          <p>Your Health: {userHealth}</p>
           <p>{result}</p>
         </div>
         <div>
@@ -60,3 +70,5 @@ const RPSGame: FC = () => {
 };
 
 export default RPSGame;
+
+// setUserChoice(choice);
