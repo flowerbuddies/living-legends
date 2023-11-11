@@ -15,9 +15,6 @@ interface Boss {
   name: string;
   health: number;
   strength: number;
-  name: string;
-  health: number;
-  strength: number;
 }
 
 const bossImages = [
