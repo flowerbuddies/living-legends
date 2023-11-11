@@ -3,13 +3,36 @@
 import Cheat from './ui/cheat';
 import HealthBar from './ui/healthbar';
 import Actions from './ui/actions';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import bg from '../../public/assets/environments/clearing.png';
 import Image from 'next/image';
 import Character from './ui/character';
+import { PlayerInfo } from '@/lib/player';
 
 export default function Home() {
   const [id, setId] = useState(-1);
+
+  useEffect(() => {
+    if (id !== -1) return;
+    fetch(`/api/player?id=${id}`, {
+      method: 'POST',
+      body: JSON.stringify({
+        name: 'Player ' + id,
+        health: 100,
+        maxHealth: 100,
+        attackModifier: 1,
+        blockAmount: 0,
+        skillPoints: 3,
+        lastNightSleep: 8,
+        last12hSteps: 2300,
+      } as PlayerInfo),
+    })
+      .then((res) => res.json())
+      .then((res: any) => {
+        setId(res.id);
+      });
+  }, []);
+
   return (
     <main>
       <Image
@@ -17,28 +40,6 @@ export default function Home() {
         alt='background'
         className='absolute top-0 left-0 w-auto h-screen overflow-x-hidden object-cover -z-10'
       />
-      {id === -1 && (
-        <>
-          <label>
-            <input
-              type='radio'
-              name='radioSet'
-              checked={id === 1}
-              onChange={() => setId(1)}
-            />
-            Player 1
-          </label>
-          <label>
-            <input
-              type='radio'
-              name='radioSet'
-              checked={id === 2}
-              onChange={() => setId(2)}
-            />
-            Player 2
-          </label>
-        </>
-      )}
       {id !== -1 && (
         <>
           <Cheat id={id} />

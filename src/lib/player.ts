@@ -27,3 +27,11 @@ export async function updatePlayer(id: number, data: Partial<PlayerInfo>) {
     data,
   });
 }
+
+export async function createPlayer(data: PlayerInfo) {
+  return (
+    await db.player.create({
+      data,
+    })
+  ).id;
+}
