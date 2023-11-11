@@ -1,7 +1,18 @@
-import { Dispatch, SetStateAction, useState } from "react";
-import { PlayerInfo } from "../../lib/playerInfo";
+"use client";
 
-export default function Skills(props: any) {
+import { useEffect, useState } from "react";
+import { PlayerInfo } from "../../lib/player";
+
+export default function Skills(props: { id: number }) {
+	const [player, setPlayer] = useState<PlayerInfo>();
+
+	useEffect(() => {
+		fetch(`/api/player?id=${props.id}`)
+			.then((res) => res.json())
+			.then((player: any) => {
+				setPlayer(player);
+			});
+	}, []);
 	return (
 		<>
 			<div className="flex flex-col">
@@ -10,18 +21,11 @@ export default function Skills(props: any) {
 				</div>
 				<div className="shadow self-center text-center">
 					<h4>💪</h4>
-					{/* <p>{props.player.strength}</p> */}
-					<p>1</p>
+					<p>{player?.attackModifier}</p>
 				</div>
 				<div className="shadow self-center text-center">
-					<h4>💪</h4>
-					{/* <p>{props.player.strength}</p> */}
-					<p>1</p>
-				</div>
-				<div className="shadow self-center text-center">
-					<h4>💪</h4>
-					{/* <p>{props.player.strength}</p> */}
-					<p>1</p>
+					<h4>🛡️</h4>
+					<p>{player?.blockAmount}</p>
 				</div>
 			</div>
 		</>
