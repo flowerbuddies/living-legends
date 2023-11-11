@@ -2,7 +2,7 @@
 
 "use client";
 
-import React, { useState, FC } from "react";
+import React, { useState, FC, useEffect } from "react";
 
 type Choice = "sword" | "shield" | "bow";
 
@@ -21,10 +21,11 @@ const RPSGame: FC = () => {
 
   const generateComputerChoice = () => {
     const randomIndex = Math.floor(Math.random() * options.length);
+    console.log(`Generated computer choice: ${options[randomIndex]}`);
     setComputerChoice(options[randomIndex]);
   };
 
-  const determineDamage = () => {
+  const determineWinner = () => {
     const damageMultiplier = 1 * Math.random() * 0.5;
     if (userChoice === computerChoice) {
       setResult("It's a draw! Both sides stand firm.");
@@ -43,29 +44,47 @@ const RPSGame: FC = () => {
     }
   };
 
+  useEffect(() => {
+    determineWinner(), [userChoice, computerChoice];
+  });
+
   const handleUserChoice = (choice: Choice) => {
+    console.log(`User choice: ${choice}`);
+    setUserChoice(choice);
     generateComputerChoice();
-    determineDamage();
   };
 
   return (
-    <div>
-      <h1>Dungeon</h1>
-      <div>
-        <div>
-          <p>Your Choice: {userChoice}</p>
-          <p>Your Health: {userHealth}</p>
-          <p>{result}</p>
-        </div>
-        <div>
-          {options.map((option) => (
-            <button key={option} onClick={() => handleUserChoice(option)}>
-              {option}
-            </button>
-          ))}
+    <>
+      <div className="container ">
+        <div className="flex flex-col justify-between h-screen">
+          <div>
+            {/* <p>Your Choice: {userChoice}</p>
+						<p>Enemy Choice: {computerChoice}</p> */}
+            <p>{result}</p>
+          </div>
+          <div className="grid grid-cols-2 items-center">
+            <p className="text-center">❤️ {computerHealth}</p>
+            <img src="https://picsum.photos/500" alt="Enemy" />
+          </div>
+          <div className="grid grid-cols-2 items-center">
+            <img src="https://picsum.photos/500" alt="Player" />
+            <p className="text-center">❤️ {userHealth}</p>
+          </div>
+          <div className="grid grid-cols-3 shadow h-20">
+            {options.map((option) => (
+              <button
+                key={option}
+                className="bg-blue-500 text-white rounded"
+                onClick={() => handleUserChoice(option)}
+              >
+                {option}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
