@@ -1,7 +1,10 @@
 // pages/index.tsx
-// "use client";
+"use client";
 
 import React, { useState, FC, useEffect } from "react";
+import { PlayerInfo } from "@/lib/player";
+import { clamp } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 type Choice = "sword" | "shield" | "bow";
 
@@ -11,12 +14,36 @@ interface Boss {
   strength: number;
 }
 
-const RPSGame: FC = () => {
+const RPSGame: FC<{ id: string }> = (props) => {
   const options: Choice[] = ["sword", "shield", "bow"];
-
+  const [player, setPlayer] = useState<PlayerInfo>();
   const [userHealth, setUserHealth] = useState<number>(100);
-  const [userStrength, setUserStrength] = useState<number>(4);
+  const [userStrength, setUserStrength] = useState<number>(1);
+  const router = useRouter();
 
+  useEffect(() => {
+    fetch(`/api/player?id=${props.id}`)
+      .then((res) => res.json())
+      .then((playerData: PlayerInfo) => {
+        setPlayer(playerData);
+      });
+  }, [props.id]);
+  useEffect(() => {
+    // Start the game when player information is fetched
+    if (player) {
+      startGame();
+    }
+  }, [player]);
+
+  const startGame = () => {
+    const playerAttackDamage = player?.attackModifier;
+    const playerHealthAmount = player?.health;
+
+    console.log(playerAttackDamage + "pad " + playerHealthAmount + "pah");
+
+    setUserHealth(playerHealthAmount ?? 100);
+    setUserStrength(playerAttackDamage ?? 1);
+  };
   const [bosses, setBosses] = useState<Boss[]>([
     { name: "Boss 1", health: 50, strength: 1 },
     { name: "Boss 2", health: 75, strength: 1.5 },
@@ -46,15 +73,19 @@ const RPSGame: FC = () => {
       (userChoice === "bow" && computerChoice === "shield")
     ) {
       const damage = Math.floor(10 * (userStrength * damageMultiplier));
-      console.log(damage + " you did this");
       bosses[currentBossIndex].health =
         bosses[currentBossIndex].health - damage;
-      setResult("You strike a mighty blow!");
+      setResult(
+        "You strike a mighty blow with your " +
+          userChoice +
+          " and do " +
+          damage +
+          " dmg!"
+      );
     } else {
       const damage = Math.floor(10 * (currentBoss.strength * damageMultiplier));
-      console.log(damage + " they did this");
       setUserHealth((prevHealth) => prevHealth - damage);
-      setResult(`${currentBoss.name} strikes back!`);
+      setResult(`${currentBoss.name} strikes back and does ${damage} dmg!`);
     }
   };
 
@@ -86,12 +117,28 @@ const RPSGame: FC = () => {
     if (userHealth > 0) {
       if (currentBossIndex === bosses.length - 1) {
         setResult("Congratulations! You defeated all bosses. You win!");
+        updatePlayer();
       } else if (bosses[currentBossIndex].health < 1) {
         setResult("You defeated the boss! Get ready for the next battle.");
         nextBoss();
       }
     } else {
       setResult("Game over! You were defeated by the boss. Try again!");
+      router.replace("/");
+    }
+
+    function updatePlayer() {
+      if (!player) return;
+      const healthToRecover = userHealth;
+
+      fetch(`/api/player?id=${props.id}`, {
+        method: "PATCH",
+        body: JSON.stringify({
+          ...player,
+          health: clamp(userHealth, 0, player.maxHealth),
+        }),
+      });
+      router.replace("/");
     }
   };
 
