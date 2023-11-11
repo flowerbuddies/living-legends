@@ -7,8 +7,17 @@ import { useRouter } from "next/navigation";
 export default function Victory() {
 	const router = useRouter();
 
+	let clicable = false;
+
+	setTimeout(() => {
+		clicable = true;
+	}, 1000);
+
 	return (
-		<div className="z-50" onClick={() => router.replace("/")}>
+		<div
+			className="z-50"
+			onClick={() => (clicable ? router.replace(`/?id=${1}`) : null)}
+		>
 			<Image
 				src={bg}
 				alt="background"
