@@ -1,13 +1,17 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { PlayerInfo } from '../../lib/player';
 import { clamp } from '../../lib/utils';
 
-export default function Cheat(props: { id: number }) {
+export default function Cheat(props: {
+  id: number;
+  skill: [number, Dispatch<SetStateAction<number>>];
+}) {
   const [player, setPlayer] = useState<PlayerInfo>();
   const [sleep, setSleep] = useState<number>(0);
   const [steps, setSteps] = useState<number>(0);
+  const [skillPoints, setSkillPoints] = props.skill;
 
   useEffect(() => {
     fetch(`/api/player?id=${props.id}`)
@@ -34,6 +38,7 @@ export default function Cheat(props: { id: number }) {
         skillPoints: player.skillPoints + additionalSkillPoints,
       }),
     });
+    setSkillPoints(player.skillPoints + additionalSkillPoints);
   }
 
   return (

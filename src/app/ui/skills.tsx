@@ -1,10 +1,14 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { PlayerInfo } from '../../lib/player';
 
-export default function Skills(props: { id: number }) {
+export default function Skills(props: {
+  id: number;
+  skillL: [number, Dispatch<SetStateAction<number>>];
+}) {
   const [player, setPlayer] = useState<PlayerInfo>();
+  const [skillPoints, setSkillPoints] = props.skillL;
 
   // fetch patch request to update player
   let doUpdate = (data: any) => {
@@ -30,18 +34,20 @@ export default function Skills(props: { id: number }) {
   };
 
   let lvl_up = (skill: string) => {
-    if (player?.skillPoints === 0) {
+    if (skillPoints === 0) {
       return;
     }
     if (skill === 'attackModifier') {
+      setSkillPoints(skillPoints - 1);
       let data = {
-        skillPoints: player && player?.skillPoints - 1,
+        skillPoints: player && skillPoints - 1,
         attackModifier: player && player?.attackModifier + 1,
       };
       doUpdate(data);
     } else if (skill === 'blockAmount') {
+      setSkillPoints(skillPoints - 1);
       let data = {
-        skillPoints: player && player?.skillPoints - 1,
+        skillPoints: player && skillPoints - 1,
         blockAmount: player && player?.blockAmount + 1,
       };
       doUpdate(data);
@@ -61,7 +67,7 @@ export default function Skills(props: { id: number }) {
       <h3 className='font-semibold text-green text-xl px-1'>Skills</h3>
       <p>
         💪 {player?.attackModifier}{' '}
-        {player && player?.skillPoints > 0 ? (
+        {player && skillPoints > 0 ? (
           <button
             className='text-green font-extrabold'
             onClick={() => lvl_up('attackModifier')}
@@ -72,7 +78,7 @@ export default function Skills(props: { id: number }) {
       </p>
       <p>
         🛡️ {player?.blockAmount}{' '}
-        {player && player?.skillPoints > 0 ? (
+        {player && skillPoints > 0 ? (
           <button
             className='text-green font-extrabold'
             onClick={() => lvl_up('blockAmount')}
@@ -81,7 +87,7 @@ export default function Skills(props: { id: number }) {
           </button>
         ) : null}
       </p>
-      <p className='text-center'>Spend: {player?.skillPoints}</p>
+      <p className='text-center'>Spend: {skillPoints}</p>
     </div>
   );
 }

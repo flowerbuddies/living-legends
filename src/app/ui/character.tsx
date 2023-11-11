@@ -3,10 +3,13 @@ import Image from 'next/image';
 import Gear from './gear';
 import Skills from './skills';
 
-export default function Character(props: { id: number }) {
+export default function Character(props: {
+  id: number;
+  skill: [number, Dispatch<SetStateAction<number>>];
+}) {
   return (
     <div className='flex justify-between'>
-      <Skills id={props.id} />
+      <Skills id={props.id} skillL={props.skill} />
       <div className='absolute top-[25vh] w-screen z-[-1]'>
         <Image
           src='/assets/characters/hero_idle_3.png'
