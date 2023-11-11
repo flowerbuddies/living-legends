@@ -1,6 +1,7 @@
 'use client';
 
-import Cheat from '@/lib/cheat';
+import Cheat from '@/app/ui/cheat';
+import HealthBar from '@/app/ui/healthbar';
 import { PlayerInfo } from '@/lib/playerInfo';
 import { useState } from 'react';
 
@@ -22,6 +23,7 @@ export default function Home() {
     <main>
       <Cheat player={player} setPlayer={setPlayer} />
       <div>{JSON.stringify(player, null, 2)}</div>
+      <HealthBar health={player.health} maxHealth={player.maxHealth} />
     </main>
   );
 }

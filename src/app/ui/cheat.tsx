@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useState } from 'react';
-import { PlayerInfo } from './playerInfo';
-import { clamp } from './utils';
+import { PlayerInfo } from '../../lib/playerInfo';
+import { clamp } from '../../lib/utils';
 
 export default function Cheat(props: {
   player: PlayerInfo;
@@ -41,7 +41,7 @@ export default function Cheat(props: {
           onChange={(e) => setSteps(Number(e.target.value))}
         />
       </div>
-      <button onClick={() => updatePlayer()}>Submit</button>
+      <button onClick={() => updatePlayer()}>Next Day</button>
     </div>
   );
 }
