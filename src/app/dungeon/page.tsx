@@ -4,7 +4,7 @@
 import React, { useState, FC, useEffect } from "react";
 import { PlayerInfo } from "@/lib/player";
 import { clamp } from "@/lib/utils";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 type Choice = "sword" | "shield" | "bow";
 
@@ -19,15 +19,19 @@ const RPSGame: FC<{ id: string }> = (props) => {
   const [player, setPlayer] = useState<PlayerInfo>();
   const [userHealth, setUserHealth] = useState<number>(100);
   const [userStrength, setUserStrength] = useState<number>(1);
+  const [userDefence, setUserDefence] = useState<number>(0);
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const id = searchParams.get("id");
 
   useEffect(() => {
-    fetch(`/api/player?id=${props.id}`)
+    fetch(`/api/player?id=${id}`)
       .then((res) => res.json())
       .then((playerData: PlayerInfo) => {
         setPlayer(playerData);
       });
-  }, [props.id]);
+  }, [id]);
   useEffect(() => {
     // Start the game when player information is fetched
     if (player) {
@@ -38,11 +42,12 @@ const RPSGame: FC<{ id: string }> = (props) => {
   const startGame = () => {
     const playerAttackDamage = player?.attackModifier;
     const playerHealthAmount = player?.health;
-
+    const playerBlockAmount = player?.blockAmount;
     console.log(playerAttackDamage + "pad " + playerHealthAmount + "pah");
 
     setUserHealth(playerHealthAmount ?? 100);
     setUserStrength(playerAttackDamage ?? 1);
+    setUserDefence(playerBlockAmount ?? 0);
   };
   const [bosses, setBosses] = useState<Boss[]>([
     { name: "Boss 1", health: 50, strength: 1 },
@@ -84,20 +89,14 @@ const RPSGame: FC<{ id: string }> = (props) => {
       );
     } else {
       const damage = Math.floor(10 * (currentBoss.strength * damageMultiplier));
-      setUserHealth((prevHealth) => prevHealth - damage);
+      setUserHealth((prevHealth) => prevHealth - (damage - userDefence));
       setResult(`${currentBoss.name} strikes back and does ${damage} dmg!`);
     }
-  };
-
-  const checkFightState = () => {
-    // Check if the user or the current boss has health remaining
-    return userHealth > 0 && bosses[currentBossIndex].health > 0;
   };
 
   const nextBoss = () => {
     // Move to the next boss
     setCurrentBossIndex((prevIndex) => prevIndex + 1);
-    // Reset user health for the next battle
   };
 
   const handleUserChoice = (choice: Choice) => {
@@ -131,7 +130,7 @@ const RPSGame: FC<{ id: string }> = (props) => {
       if (!player) return;
       const healthToRecover = userHealth;
 
-      fetch(`/api/player?id=${props.id}`, {
+      fetch(`/api/player?id=${id}`, {
         method: "PATCH",
         body: JSON.stringify({
           ...player,
