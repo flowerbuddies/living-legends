@@ -156,13 +156,13 @@ const RPSGame = () => {
       <Image
         src={bg}
         alt='background'
-        className='absolute top-0 left-0 w-auto h-screen overflow-x-hidden object-cover -z-10'
+        className='absolute top-0 left-1/2 -translate-x-1/2 w-[393px] h-screen overflow-x-hidden object-cover -z-10'
       />
       <div>
         {/* <p>Your Choice: {userChoice}</p>
             <p>Enemy Choice: {computerChoice}</p> */}
       </div>
-      <div className='absolute top-5 left-0 right-0'>
+      <div className='absolute top-5 left-1/2 w-[393px] -translate-x-1/2'>
         <p className='text-center font-bold text-xl' style={{ color: 'white' }}>
           ❤️ {bosses[currentBossIndex].health}
         </p>
@@ -172,13 +172,13 @@ const RPSGame = () => {
           className='w-[60vw] mx-auto -mt-10 translate-y-10'
         />
       </div>
-      <div className='absolute bottom-5 w-[393px]'>
+      <div className='absolute bottom-5 left-1/2 -translate-x-1/2 w-[393px]'>
         <Image src={hero} alt='Player' className='h-[35vh] w-auto mx-auto' />
         <p className='text-center font-bold text-xl' style={{ color: 'white' }}>
           ❤️ {userHealth}
         </p>
       </div>
-      <div className='absolute left-0 right-0 top-1/2 -translate-y-1/2'>
+      <div className='absolute left-1/2 -translate-x-1/2 w-[393px] top-1/2 -translate-y-1/2'>
         <p className='bg-white text-green text-center mb-5 text-xl'>{result}</p>
         <div className='flex justify-evenly h-fit'>
           {options.map((option) => (
