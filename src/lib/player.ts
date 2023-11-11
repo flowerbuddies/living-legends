@@ -17,13 +17,13 @@ export interface PlayerInfo {
 
 export async function getPlayer(id: number): Promise<PlayerInfo> {
   return (await db.player.findUnique({
-    where: { id: 1 },
+    where: { id: id },
   }))!;
 }
 
 export async function updatePlayer(id: number, data: Partial<PlayerInfo>) {
   return await db.player.update({
-    where: { id: 1 },
+    where: { id: id },
     data,
   });
 }
