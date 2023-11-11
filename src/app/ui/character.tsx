@@ -7,7 +7,7 @@ export default function Character(props: { id: number }) {
   return (
     <div className='flex justify-between'>
       <Skills id={props.id} />
-      <div className='absolute top-[18vh] w-screen z-[-1]'>
+      <div className='absolute top-[25vh] w-screen z-[-1]'>
         <Image
           src='/assets/characters/hero_idle_3.png'
           alt='character'
