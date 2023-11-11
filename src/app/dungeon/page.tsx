@@ -5,6 +5,8 @@ import React, { useState, FC, useEffect } from "react";
 import { PlayerInfo } from "@/lib/player";
 import { clamp } from "@/lib/utils";
 import { useRouter, useSearchParams } from "next/navigation";
+import Image from "next/image";
+import bg from "/public/assets/environments/gloomy_clearing.png";
 
 type Choice = "sword" | "shield" | "bow";
 
@@ -13,6 +15,13 @@ interface Boss {
   health: number;
   strength: number;
 }
+
+const bossImages = [
+  "/assets/characters/monster.png",
+  "/assets/characters/monster_2.png",
+  "/assets/characters/boss.png",
+  // Add more images as needed
+];
 
 const RPSGame: FC<{ id: string }> = (props) => {
   const options: Choice[] = ["sword", "shield", "bow"];
@@ -51,8 +60,8 @@ const RPSGame: FC<{ id: string }> = (props) => {
   };
   const [bosses, setBosses] = useState<Boss[]>([
     { name: "Boss 1", health: 50, strength: 1 },
-    { name: "Boss 2", health: 75, strength: 1.5 },
-    { name: "Final Boss", health: 120, strength: 2 },
+    { name: "Boss 2", health: 10, strength: 1.5 },
+    { name: "Final Boss", health: 250, strength: 10 },
   ]);
 
   const [currentBossIndex, setCurrentBossIndex] = useState<number>(0);
@@ -104,17 +113,14 @@ const RPSGame: FC<{ id: string }> = (props) => {
 
     // Run the game loop when the userChoice changes
     generateComputerChoice();
-    console.log(
-      "your weapon is " +
-        userChoice +
-        " and the enemy weapon is " +
-        computerChoice
-    );
     determineWinner();
 
     // Check if the user won or lost
     if (userHealth > 0) {
-      if (currentBossIndex === bosses.length - 1) {
+      if (
+        currentBossIndex === bosses.length - 1 &&
+        bosses[currentBossIndex].health < 1
+      ) {
         setResult("Congratulations! You defeated all bosses. You win!");
         updatePlayer();
       } else if (bosses[currentBossIndex].health < 1) {
@@ -146,20 +152,32 @@ const RPSGame: FC<{ id: string }> = (props) => {
 
   return (
     <>
+      <Image
+        src={bg}
+        alt="background"
+        className="absolute top-0 left-0 w-auto h-screen overflow-x-hidden object-cover -z-10"
+      />
       <div className="container ">
         <div className="flex flex-col justify-between h-screen">
           <div>
             {/* <p>Your Choice: {userChoice}</p>
             <p>Enemy Choice: {computerChoice}</p> */}
-            <p>{result}</p>
+            <p style={{ color: "white" }}>{result}</p>
+          </div>
+          <div className="grid grid-cols-2 items-center justify-self-end">
+            <p className="text-center" style={{ color: "white" }}>
+              ❤️ {bosses[currentBossIndex].health}
+            </p>
+            <img
+              src={bossImages[currentBossIndex]}
+              alt={`Boss ${currentBossIndex + 1}`}
+            />
           </div>
           <div className="grid grid-cols-2 items-center">
-            <p className="text-center">❤️ {bosses[currentBossIndex].health}</p>
-            <img src="https://picsum.photos/500" alt="Boss" />
-          </div>
-          <div className="grid grid-cols-2 items-center">
-            <img src="https://picsum.photos/500" alt="Player" />
-            <p className="text-center">❤️ {userHealth}</p>
+            <img src="/assets/characters/hero_combat_3.png" alt="Player" />
+            <p className="text-center" style={{ color: "white" }}>
+              ❤️ {userHealth}
+            </p>
           </div>
           <div className="grid grid-cols-3 shadow h-20">
             {options.map((option) => (
