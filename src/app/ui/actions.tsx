@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { PlayerInfo } from "../../lib/player";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from 'react';
+import { PlayerInfo } from '../../lib/player';
+import { useRouter } from 'next/navigation';
 
 export default function Actions(props: { id: number }) {
   const [player, setPlayer] = useState<PlayerInfo>();
@@ -18,16 +18,19 @@ export default function Actions(props: { id: number }) {
   }, []);
   return (
     <>
-      <div className="flex">
+      <div className='flex w-[90vw] justify-around mx-auto absolute left-0 bottom-20 right-0'>
         <button
           onClick={() => router.replace(`/dungeon?id=${props.id}`)}
           disabled={player?.health == 0}
-          className="disabled:bg-gray-200 bg-green-200"
+          className='disabled:line-through decoration-4 bg-green h-16 px-4 rounded-[1.75rem] text-white font-extrabold text-2xl w-[40vw]'
         >
-          Enter a dungeon
+          Dungeon
         </button>
-        <button disabled className="disabled:bg-gray-200">
-          PvP
+        <button
+          disabled
+          className='disabled:line-through decoration-4 bg-green h-16 px-4 rounded-[1.75rem] text-white font-extrabold text-2xl w-[40vw]'
+        >
+          Duel
         </button>
       </div>
     </>

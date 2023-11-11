@@ -39,29 +39,29 @@ export default function Cheat(props: { id: number }) {
   return (
     <div className='flex w-screen text-white justify-evenly my-4'>
       <div className='flex flex-col items-center'>
-        <h3 className='text-emerald-300 font-bold text-xl bg-white border-2 border-b-0 rounded-t-xl border-emerald-300 p-1'>
+        <h3 className='text-green font-bold text-xl bg-white border-4 border-b-0 rounded-t-xl border-green p-1'>
           Sleep
         </h3>
         <input
           type='text'
           value={sleep}
-          className='w-20 border-2 border-emerald-300 rounded-lg text-black text-center font-semibold'
+          className='w-20 border-4 border-green rounded-lg text-black text-center font-semibold'
           onChange={(e) => setSleep(Number(e.target.value))}
         />
       </div>
       <div className='flex flex-col items-center'>
-        <h3 className='text-emerald-300 font-bold text-xl bg-white border-2 border-b-0 rounded-t-xl border-emerald-300 p-1'>
+        <h3 className='text-green font-bold text-xl bg-white border-4 border-b-0 rounded-t-xl border-green p-1'>
           Steps
         </h3>
         <input
           type='text'
           value={steps}
-          className='w-20 border-2 border-emerald-300 rounded-lg text-black text-center font-semibold'
+          className='w-20 border-4 border-green rounded-lg text-black text-center font-semibold'
           onChange={(e) => setSteps(Number(e.target.value))}
         />
       </div>
       <button
-        className='border-4 border-emerald-300 rounded-2xl p-2 bg-white text-emerald-300 font-bold text-xl'
+        className='border-4 border-green rounded-2xl p-2 bg-white text-green font-bold text-xl'
         onClick={() => updatePlayer()}
       >
         Next Day

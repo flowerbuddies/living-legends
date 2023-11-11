@@ -6,5 +6,12 @@ const config: Config = {
     './src/lib/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  theme: {
+    extend: {
+      colors: {
+        green: '#3b5e2f',
+      },
+    },
+  },
 };
 export default config;
