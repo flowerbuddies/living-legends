@@ -31,6 +31,7 @@ const RPSGame: FC<{ id: string }> = (props) => {
   const [userDefence, setUserDefence] = useState<number>(0);
   const router = useRouter();
   const searchParams = useSearchParams();
+  let isWin = false;
 
   const id = searchParams.get("id");
 
@@ -52,7 +53,6 @@ const RPSGame: FC<{ id: string }> = (props) => {
     const playerAttackDamage = player?.attackModifier;
     const playerHealthAmount = player?.health;
     const playerBlockAmount = player?.blockAmount;
-    console.log(playerAttackDamage + "pad " + playerHealthAmount + "pah");
 
     setUserHealth(playerHealthAmount ?? 100);
     setUserStrength(playerAttackDamage ?? 1);
@@ -122,6 +122,7 @@ const RPSGame: FC<{ id: string }> = (props) => {
         bosses[currentBossIndex].health < 1
       ) {
         setResult("Congratulations! You defeated all bosses. You win!");
+        isWin = true;
         updatePlayer();
       } else if (bosses[currentBossIndex].health < 1) {
         setResult("You defeated the boss! Get ready for the next battle.");
@@ -143,12 +144,13 @@ const RPSGame: FC<{ id: string }> = (props) => {
           health: clamp(userHealth, 0, player.maxHealth),
         }),
       });
-      router.replace("/");
+      if (isWin === true) {
+        router.replace("../victory");
+      } else {
+        router.replace("/");
+      }
     }
   };
-
-  // useEffect(() => {
-  // });
 
   return (
     <>
