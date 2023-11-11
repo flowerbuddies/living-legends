@@ -20,7 +20,7 @@ export default function HealthBar(props: { id: number }) {
       {player && (
         <div className='h-12 w-[90vw] mx-auto rounded-full border-4 border-green bg-white mt-10'>
           <div
-            className='h-full bg-red-300 rounded-full flex flex-col justify-center'
+            className='h-full bg-red rounded-full flex flex-col justify-center'
             style={{ width: `${(player.health / player.maxHealth) * 100}%` }}
           >
             <p className='text-center font-semibold'>
