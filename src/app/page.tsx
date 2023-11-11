@@ -2,21 +2,27 @@
 
 import Cheat from './ui/cheat';
 import HealthBar from './ui/healthbar';
-import Skills from './ui/skills';
 import Actions from './ui/actions';
 import { useState } from 'react';
+import bg from '../../public/assets/environments/clearing.png';
+import Image from 'next/image';
+import Character from './ui/character';
 
 export default function Home() {
   const [id, setId] = useState(-1);
   return (
     <main>
+      <Image
+        src={bg}
+        alt='background'
+        className='absolute top-0 left-0 w-auto h-screen overflow-x-hidden object-cover -z-10'
+      />
       {id === -1 && (
         <>
           <label>
             <input
               type='radio'
               name='radioSet'
-              value='1'
               checked={id === 1}
               onChange={() => setId(1)}
             />
@@ -26,7 +32,6 @@ export default function Home() {
             <input
               type='radio'
               name='radioSet'
-              value='2'
               checked={id === 2}
               onChange={() => setId(2)}
             />
@@ -38,7 +43,7 @@ export default function Home() {
         <>
           <Cheat id={id} />
           <HealthBar id={id} />
-          <Skills id={id} />
+          <Character id={id} />
           <Actions id={id} />
         </>
       )}
