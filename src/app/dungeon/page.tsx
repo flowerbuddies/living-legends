@@ -24,7 +24,7 @@ const bossImages = [
   // Add more images as needed
 ];
 
-const RPSGame: FC<{ id: string }> = (props) => {
+const RPSGame = () => {
   const options: Choice[] = ['Sword', 'Shield', 'Bow'];
   const [player, setPlayer] = useState<PlayerInfo>();
   const [userHealth, setUserHealth] = useState<number>(100);
