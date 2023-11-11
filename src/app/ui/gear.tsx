@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 export default function Gear(props: any) {
   return (
-    <div className='bg-white border-4 rounded-2xl border-green flex flex-col items-center pt-2 mr-[5vw] mt-[5vw]'>
+    <div className='bg-white border-4 rounded-2xl border-green flex flex-col items-center pt-2 mr-[2vw] mt-[2vw]'>
       <h3 className='font-semibold text-green text-xl px-1'>Gear</h3>
       <div className=''>
         <Image

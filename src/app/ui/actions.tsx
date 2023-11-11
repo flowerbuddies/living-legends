@@ -22,13 +22,13 @@ export default function Actions(props: { id: number }) {
         <button
           onClick={() => router.replace(`/dungeon?id=${props.id}`)}
           disabled={player?.health == 0}
-          className='disabled:line-through decoration-4 bg-green border-red border-2 h-16 px-4 rounded-[1.75rem] text-white font-extrabold text-2xl w-[40vw]'
+          className='disabled:line-through decoration-4 bg-green border-red border-2 h-16 px-4 rounded-[1.75rem] text-white font-extrabold text-2xl w-[18vw]'
         >
           Dungeon
         </button>
         <button
           disabled
-          className='disabled:line-through decoration-4 bg-green border-red border-2 h-16 px-4 rounded-[1.75rem] text-white font-extrabold text-2xl w-[40vw]'
+          className='disabled:line-through decoration-4 bg-green border-red border-2 h-16 px-4 rounded-[1.75rem] text-white font-extrabold text-2xl w-[18vw]'
         >
           Duel
         </button>

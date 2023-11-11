@@ -63,7 +63,7 @@ export default function Skills(props: {
   }, []);
 
   return (
-    <div className='flex flex-col bg-white border-4 border-green rounded-2xl mt-[5vw] py-2 ml-[5vw] px-1 items-center h-fit'>
+    <div className='flex flex-col bg-white border-4 border-green rounded-2xl mt-[2vw] py-2 ml-[2vw] px-1 items-center h-fit'>
       <h3 className='font-semibold text-green text-xl px-1'>Skills</h3>
       <p>
         💪 {player?.attackModifier}{' '}
