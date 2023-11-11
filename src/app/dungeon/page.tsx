@@ -124,7 +124,7 @@ const RPSGame: FC<{ id: string }> = (props) => {
       }
     } else {
       setResult("Game over! You were defeated by the boss. Try again!");
-      router.replace("/");
+      updatePlayer();
     }
 
     function updatePlayer() {
