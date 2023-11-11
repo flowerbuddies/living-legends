@@ -54,7 +54,6 @@ const RPSGame: FC<{ id: string }> = (props) => {
     const playerAttackDamage = player?.attackModifier;
     const playerHealthAmount = player?.health;
     const playerBlockAmount = player?.blockAmount;
-
     setUserHealth(playerHealthAmount ?? 100);
     setUserStrength(playerAttackDamage ?? 1);
     setUserDefence(playerBlockAmount ?? 0);
@@ -145,7 +144,6 @@ const RPSGame: FC<{ id: string }> = (props) => {
         }),
       });
       if (isWin === true) {
-        console.log("vittu saatana");
         router.replace("/victory");
       } else {
         router.replace("/loss");
