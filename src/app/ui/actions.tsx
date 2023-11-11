@@ -18,7 +18,7 @@ export default function Actions(props: { id: number }) {
   }, []);
   return (
     <>
-      <div className='flex w-[90vw] justify-around mx-auto absolute left-0 bottom-20 right-0'>
+      <div className='flex w-[353px] justify-around mx-auto absolute left-0 bottom-20 right-0'>
         <button
           onClick={() => router.replace(`/dungeon?id=${props.id}`)}
           disabled={player?.health == 0}

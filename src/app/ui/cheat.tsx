@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { PlayerInfo } from "../../lib/player";
-import { clamp } from "../../lib/utils";
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { PlayerInfo } from '../../lib/player';
+import { clamp } from '../../lib/utils';
 
 export default function Cheat(props: {
   id: number;
@@ -37,7 +37,7 @@ export default function Cheat(props: {
       })
       .then(() => {
         fetch(`/api/player?id=${props.id}`, {
-          method: "PATCH",
+          method: 'PATCH',
           body: JSON.stringify({
             ...player,
             lastNightSleep: sleep,
@@ -52,35 +52,35 @@ export default function Cheat(props: {
   }
 
   return (
-    <div className="border-8 border-red bg-white">
-      <h3 className="text-red text-xl font-bold text-center">
+    <div className='border-8 border-red bg-white'>
+      <h3 className='text-red text-xl font-bold text-center'>
         IRL Activity Simulator
       </h3>
-      <div className="flex w-screen text-white justify-evenly my-4">
-        <div className="flex flex-col items-center">
-          <h3 className="text-green font-bold text-xl bg-white border-4 border-b-0 rounded-t-xl border-green p-1">
+      <div className='flex w-[393px] text-white justify-evenly my-4'>
+        <div className='flex flex-col items-center'>
+          <h3 className='text-green font-bold text-xl bg-white border-4 border-b-0 rounded-t-xl border-green p-1'>
             Sleep
           </h3>
           <input
-            type="number"
+            type='text'
             value={sleep}
-            className="w-20 border-4 border-green rounded-lg text-black text-center font-semibold"
+            className='w-20 border-4 border-green rounded-lg text-black text-center font-semibold'
             onChange={(e) => setSleep(Number(e.target.value))}
           />
         </div>
-        <div className="flex flex-col items-center">
-          <h3 className="text-green font-bold text-xl bg-white border-4 border-b-0 rounded-t-xl border-green p-1">
+        <div className='flex flex-col items-center'>
+          <h3 className='text-green font-bold text-xl bg-white border-4 border-b-0 rounded-t-xl border-green p-1'>
             Steps
           </h3>
           <input
-            type="number"
+            type='text'
             value={steps}
-            className="w-20 border-4 border-green rounded-lg text-black text-center font-semibold"
+            className='w-20 border-4 border-green rounded-lg text-black text-center font-semibold'
             onChange={(e) => setSteps(Number(e.target.value))}
           />
         </div>
         <button
-          className="border-4 border-green rounded-2xl p-2 bg-white text-green font-bold text-xl"
+          className='border-4 border-green rounded-2xl p-2 bg-white text-green font-bold text-xl'
           onClick={() => updatePlayer()}
         >
           Next Day

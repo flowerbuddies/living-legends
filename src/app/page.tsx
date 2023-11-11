@@ -18,7 +18,6 @@ export default function Home() {
   useEffect(() => {
     if (ran) return;
     ran = true;
-    console.log('page:', id);
     fetch(`/api/player?id=${id}`, {
       method: 'POST',
       body: JSON.stringify({
@@ -43,7 +42,7 @@ export default function Home() {
       <Image
         src={bg}
         alt='background'
-        className='absolute top-0 left-0 w-auto h-screen overflow-x-hidden object-cover -z-10'
+        className='absolute top-0 left-1/2 -translate-x-1/2 w-[393px] h-screen overflow-x-hidden object-cover -z-10'
       />
       {id !== -1 && (
         <>

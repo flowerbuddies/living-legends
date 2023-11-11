@@ -10,7 +10,7 @@ export default function Character(props: {
   return (
     <div className='flex justify-between'>
       <Skills id={props.id} skillL={props.skill} />
-      <div className='absolute top-[25vh] w-screen z-[-1]'>
+      <div className='absolute top-[25vh] w-[393px] z-[-1]'>
         <Image
           src='/assets/characters/hero_idle_3.png'
           alt='character'
