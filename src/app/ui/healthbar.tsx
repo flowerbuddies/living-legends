@@ -18,7 +18,7 @@ export default function HealthBar(props: { id: number }) {
   return (
     <div>
       {player && (
-        <div className='h-12 w-[90vw] mx-auto rounded-full border-4 border-green bg-white mt-10 flex flex-col justify-center'>
+        <div className='h-12 w-[90vw] mx-auto rounded-full border-4 border-green bg-white mt-5 flex flex-col justify-center'>
           {player.health > 0 ? (
             <div
               className='h-full bg-red rounded-full flex flex-col justify-center'
