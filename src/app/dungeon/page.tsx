@@ -148,7 +148,7 @@ const RPSGame: FC<{ id: string }> = (props) => {
         console.log("vittu saatana");
         router.replace("/victory");
       } else {
-        router.replace("/");
+        router.replace("/loss");
       }
     }
   };
