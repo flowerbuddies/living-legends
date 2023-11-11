@@ -11,5 +11,5 @@ export async function PATCH(request: NextRequest) {
   const id = Number(request.nextUrl.searchParams.get('id'));
   const data = await request.json();
   await updatePlayer(id, data);
-  return NextResponse.json({ ok: true });
+  return NextResponse.json(data);
 }
