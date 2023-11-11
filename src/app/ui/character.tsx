@@ -9,7 +9,7 @@ export default function Character(props: { id: number }) {
 			<Skills id={props.id} />
 			<div className="self-center mx-3">
 				<Image
-					src="/assets/hero_idle_2.png"
+					src="/assets/characters/hero_idle_3.png"
 					alt="character"
 					width={300}
 					height={500}
